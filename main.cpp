@@ -5,16 +5,17 @@
 
 using namespace std;
 
-
-const int GOALPRICE = 400;
+//global statics
+const int GPUPRICE = 400;
+const int ROW_SIZE = 5;
 
 void StartMenu(int);
 int CalculateRemainingDays();
+void ReadLog(string[][ROW_SIZE]);
 
 struct Info {
     int workDayHours = 7;
-    int totalWorkDays = 41;
-    int daysLeft;
+    int totalWorkDays = 48; //CHANGE TO 41
     double expectedWorkPercentage = 0.8;
     double totalHoursWorked;
 };
@@ -23,8 +24,6 @@ struct Info {
 
 int main()
 {
-
-
 
 
     // Begin the menu, determine if we are starting or ending the day
@@ -50,6 +49,11 @@ int main()
 
 void StartMenu(int flag){
 
+    Info goalInfo;
+    string logArray[goalInfo.totalWorkDays - CalculateRemainingDays()][ROW_SIZE];
+    ReadLog(logArray);
+
+
     // Start either the starting or ending menu
 
     if (flag == 0){
@@ -67,8 +71,6 @@ void StartMenu(int flag){
 
         string buffer(initBuffer);
         cout<<"You've started work at "<<buffer<<endl<<endl;
-
-
 
 
         delete timeInfo;
@@ -119,7 +121,32 @@ int CalculateRemainingDays(){
     return daysLeft;
 }
 
+//Going to be used for statistics and such
+void ReadLog(string log[][ROW_SIZE]){
 
+    fstream input;
+    input.open("log.txt", fstream::in);
+    char charTemp[256];
+    input.getline(charTemp, 256);
+
+    int row = 0, element = 0;
+
+    while(input.getline(charTemp, 256, ',')){
+        string temp = charTemp;
+
+        log[row][element] = temp;
+
+        row += (element / (ROW_SIZE - 1)); // Works since integers round down, so it will only add '1' when the element is the last element in the row (Or ROW_SIZE - 1)
+        element = (++element) % ROW_SIZE;
+
+    }
+cout<<sizeof(log);
+    input.close();
+
+
+
+    return;
+}
 
 
 
