@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1464893917 source:h:\documents\programs\motyv8\main.cpp
+	<iostream>
+	<ctime>
+	<fstream>
+
