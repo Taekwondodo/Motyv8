@@ -1,0 +1,2 @@
+workDayHours totalWorkDays expectedWorkPercentage
+7 48 0.8
